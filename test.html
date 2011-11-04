@@ -4,25 +4,60 @@
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 <meta http-equiv='Content-Type' content='type=text/html; charset=utf-8'>
 <title>Google Maps JavaScript API v3 Example: Complex Icons</title>
+
+<link href="css/reset.css" rel="stylesheet" type="text/css" />
+<link href="css/main.css" rel="stylesheet" type="text/css" />
 <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
 <script type="text/javascript">
 function initialize() {
+	// Initial configuration
+	min_height = 0;
+
   var myOptions = {
     zoom: 7,
     center: new google.maps.LatLng(64.8, -18),
-    mapTypeId: google.maps.MapTypeId.ROADMAP
+    mapTypeId: google.maps.MapTypeId.SATELLITE
   }
   var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-  setMarkers(map, beaches);
+
+  // Adds markers to the map
+	markers = [];
+  for (var i = 0; i < mountains.length; i++) {
+    var mountain = mountains[i];
+    var location = new google.maps.LatLng(mountain[1], mountain[2]);
+    var marker = new google.maps.Marker({
+        position: location,
+        map: map,
+        title: mountain[0]
+    });
+		if (mountain[3] < min_height || mountain[4] > max_height) {
+			marker.setVisible(false);
+		}
+		markers[i] = marker;
+  }
+
+	// Settings stuff
+	$("#update_settings").click(function() {
+		min_height = parseInt($("#min_height").val());
+		max_height = parseInt($("#max_height").val());
+		for (var i = 0; i < mountains.length; i++) {
+			// TODO: Code duplication.
+			var mountain = mountains[i];
+			if (mountain[3] < min_height || mountain[4] > max_height) {
+				markers[i].setVisible(false);
+			} else {
+				markers[i].setVisible(true);
+			}
+		}
+	});
 }
 
-/**
- * Data for the markers consisting of a name, a LatLng and a zIndex for
- * the order in which these markers should display on top of each
- * other.
- */
-var beaches = [
+/* The actual data. */
+var mountains = [
 	['Akrafjall', 64.343517000000006, -21.9163, 643, 500] ,
 	['Arnarfell hi\xc3\xb0 mikla', 64.694467000000003, -18.66255, 1137, 517] ,
 	['Arnarfell vi\xc3\xb0 \xc3\x9eingvallavatn', 64.217382999999998, -21.075733, 239, 110] ,
@@ -175,24 +210,22 @@ var beaches = [
 	['\xc3\x9everfell vi\xc3\xb0 Rey\xc3\xb0arvatn', 64.472217000000001, -21.093382999999999, 655, 350] ,
 	['\xc3\x9eyrill', 64.393117000000004, -21.406199999999998, 393, 350]
 ];
-
-function setMarkers(map, locations) {
-  // Add markers to the map
-  for (var i = 0; i < locations.length; i++) {
-    var beach = locations[i];
-    var myLatLng = new google.maps.LatLng(beach[1], beach[2]);
-    var marker = new google.maps.Marker({
-        position: myLatLng,
-        map: map,
-        title: beach[0],
-        zIndex: beach[3]
-    });
-  }
-}
 </script>
 </head>
 <body onload="initialize()">
-	<h1>&nbsp; Íslensk fjöll: Gönguleiðir á 151 tind</h1>
+	<div id="header">
+		<div id="title">
+			<h1>Íslensk fjöll: Gönguleiðir á 151 tind</h1>
+			<h2>Just testing this stuff!</h2>
+		</div>
+		<div id="settings">
+			<input id="min_height" name="min_height" type="text" value="0" />
+			<input id="max_height" name="max_height" type="text" value="2109" />
+			<input id="update_settings" name="update_settings" type="submit" /> 
+		</div>
+		<div style="clear: both;"></div>
+	</div>
+
   <div id="map_canvas"></div>
 </body>
 </html>
