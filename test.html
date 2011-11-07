@@ -1,216 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-<meta http-equiv='Content-Type' content='type=text/html; charset=utf-8'>
-<title>Google Maps JavaScript API v3 Example: Complex Icons</title>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<meta http-equiv='Content-Type' content='type=text/html; charset=utf-8'>
+	<title>Google Maps JavaScript API v3 Example: Complex Icons</title>
 
-<link href="css/reset.css" rel="stylesheet" type="text/css" />
-<link href="css/main.css" rel="stylesheet" type="text/css" />
-<link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<link href="css/reset.css" rel="stylesheet" type="text/css" />
+	<link href="css/main.css" rel="stylesheet" type="text/css" />
+	<link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
 
-<script type="text/javascript">
-function initialize() {
-	// Initial configuration
-	min_height = 0;
-
-  var myOptions = {
-    zoom: 7,
-    center: new google.maps.LatLng(64.8, -18),
-    mapTypeId: google.maps.MapTypeId.SATELLITE
-  }
-  var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
-  // Adds markers to the map
-	markers = [];
-  for (var i = 0; i < mountains.length; i++) {
-    var mountain = mountains[i];
-    var location = new google.maps.LatLng(mountain[1], mountain[2]);
-    var marker = new google.maps.Marker({
-        position: location,
-        map: map,
-        title: mountain[0]
-    });
-		if (mountain[3] < min_height || mountain[4] > max_height) {
-			marker.setVisible(false);
-		}
-		markers[i] = marker;
-  }
-
-	// Settings stuff
-	$("#update_settings").click(function() {
-		min_height = parseInt($("#min_height").val());
-		max_height = parseInt($("#max_height").val());
-		for (var i = 0; i < mountains.length; i++) {
-			// TODO: Code duplication.
-			var mountain = mountains[i];
-			if (mountain[3] < min_height || mountain[4] > max_height) {
-				markers[i].setVisible(false);
-			} else {
-				markers[i].setVisible(true);
-			}
-		}
-	});
-}
-
-/* The actual data. */
-var mountains = [
-	['Akrafjall', 64.343517000000006, -21.9163, 643, 500] ,
-	['Arnarfell hi\xc3\xb0 mikla', 64.694467000000003, -18.66255, 1137, 517] ,
-	['Arnarfell vi\xc3\xb0 \xc3\x9eingvallavatn', 64.217382999999998, -21.075733, 239, 110] ,
-	['\xc3\x81rmannsfell', 64.313582999999994, -21.015882999999999, 764, 600] ,
-	['Baula', 64.849000000000004, -21.439499999999999, 917, 700] ,
-	['Birnudalstindur', 64.244950000000003, -15.932033000000001, 1326, 1275] ,
-	['Bjarnarhafnarfjall', 64.986932999999993, -23.004999999999999, 575, 545] ,
-	['Bl\xc3\xa1fell', 64.488150000000005, -19.858083000000001, 1204, 600] ,
-	['Bl\xc3\xa1mannshattur', 65.926132999999993, -18.001532999999998, 1214, 1150] ,
-	['Brekkukambur', 64.421566999999996, -21.469783, 646, 640] ,
-	['Brennisteinsalda', 63.980817000000002, -19.09525, 881, 230] ,
-	['B\xc3\xbalandstindur', 64.691017000000002, -14.403682999999999, 1069, 1020] ,
-	['B\xc3\xbarfell \xc3\xad Gr\xc3\xadmsnesi', 64.094767000000004, -20.937200000000001, 534, 430] ,
-	['B\xc3\xbarfell \xc3\xad \xc3\x9eingvallasveit', 64.306282999999993, -21.215633, 783, 600] ,
-	['D\xc3\xb3r', 63.997399999999999, -21.590350000000001, 876, 180] ,
-	['Dr\xc3\xa1puhl\xc3\xad\xc3\xb0arfjall', 64.974033000000006, -22.721350000000001, 527, 477] ,
-	['Dyrfj\xc3\xb6ll', 65.504549999999995, -13.952866999999999, 1136, 1080] ,
-	['D\xc3\xbdjafjallshnj\xc3\xbakur', 65.753399999999999, -18.525067, 1445, 1295] ,
-	['Einhyrningur', 63.740032999999997, -19.472716999999999, 651, 350] ,
-	['Eir\xc3\xadksj\xc3\xb6kull', 64.770849999999996, -20.398883000000001, 1672, 1320] ,
-	['Ernir', 66.06635, -23.079350000000002, 628, 580] ,
-	['Eyjafjallaj\xc3\xb6kull', 63.630450000000003, -19.591783, 1651, 1530] ,
-	['Fannt\xc3\xb3fell', 64.545749999999998, -20.937867000000001, 901, 380] ,
-	['Festarfjall', 63.859250000000003, -22.331800000000001, 201, 50] ,
-	['Geirhn\xc3\xbakur', 64.917950000000005, -21.99155, 898, 748] ,
-	['Geitafell', 63.9422, -21.521100000000001, 509, 300] ,
-	['Geitlandsj\xc3\xb6kull', 64.600133, -20.5901, 1390, 740] ,
-	['Grasgiljatindur', 64.467816999999997, -15.33085, 1267, 1200] ,
-	['Grendill', 64.601366999999996, -15.420966999999999, 1564, 660] ,
-	['Gr\xc3\xadmannsfell', 64.159566999999996, -21.520116999999999, 482, 420] ,
-	['Gr\xc3\xadmssta\xc3\xb0am\xc3\xbali', 64.712532999999993, -21.938849999999999, 495, 370] ,
-	['Hafnarfjall', 64.496516999999997, -21.892700000000001, 844, 740] ,
-	['Hafrafell', 64.693250000000006, -20.562083000000001, 1165, 565] ,
-	['Hafursey', 63.522150000000003, -18.774550000000001, 582, 440] ,
-	['Hagafjall', 64.081883000000005, -20.045217000000001, 470, 345] ,
-	['Hatta', 63.441549999999999, -19.00695, 504, 360] ,
-	['H\xc3\xa1degishn\xc3\xbakur', 64.650317000000001, -21.063067, 1076, 450] ,
-	['H\xc3\xa1sker\xc3\xb0ingur', 63.893433000000002, -19.122250000000001, 1281, 450] ,
-	['H\xc3\xa1tindur', 64.244100000000003, -21.60155, 909, 800] ,
-	['Hekla', 63.991483000000002, -19.673933000000002, 1491, 1040] ,
-	['Helgafell  \xc3\xad Mosfellssveit', 64.174216999999999, -21.65165, 215, 100] ,
-	['Helgafell ofan Hafnarfjar\xc3\xb0ar', 64.010417000000004, -21.85125, 338, 260] ,
-	['Helgrindur', 64.897000000000006, -23.352533000000001, 988, 948] ,
-	['Hengill', 64.084033000000005, -21.315332999999999, 805, 500] ,
-	['Her\xc3\xb0ubrei\xc3\xb0', 65.173749999999998, -16.34515, 1677, 1190] ,
-	['Hestfjall \xc3\xad Borgarfir\xc3\xb0i', 64.560000000000002, -21.658417, 221, 140] ,
-	['Hestfjall \xc3\xad Gr\xc3\xadmsnesi', 64.018282999999997, -20.670067, 322, 260] ,
-	['Hestskar\xc3\xb0shnj\xc3\xbakur', 66.133399999999995, -18.855283, 855, 735] ,
-	['Hl\xc3\xb6\xc3\xb0ufell', 64.419416999999996, -20.533767000000001, 1186, 740] ,
-	['H\xc3\xb3lmatindur', 65.056933000000001, -14.048617, 985, 930] ,
-	['Hrafnabj\xc3\xb6rg', 64.272467000000006, -20.921600000000002, 763, 220] ,
-	['Hreppsendas\xc3\xbalur', 65.949299999999994, -18.88355, 1052, 850] ,
-	['Hrolleifsborg', 66.164249999999996, -22.184567000000001, 851, 780] ,
-	['Hr\xc3\xbataborg', 64.839933000000002, -22.136683000000001, 879, 760] ,
-	['Hr\xc3\xbatfell', 64.7286, -19.761583000000002, 1396, 850] ,
-	['Hr\xc3\xbatsfjallstindar', 64.051567000000006, -16.738517000000002, 1756, 1650] ,
-	['H\xc3\xbasav\xc3\xadkurfjall', 66.045749999999998, -17.301566999999999, 417, 367] ,
-	['H\xc3\xbasfell', 64.02655, -21.799399999999999, 288, 170] ,
-	['Hvalfell', 64.385050000000007, -21.209316999999999, 852, 700] ,
-	['Hvannadalshn\xc3\xbakur', 64.014482999999998, -16.661617, 2109, 2000] ,
-	['Hv\xc3\xadtserkur', 65.435067000000004, -13.751232999999999, 771, 370] ,
-	['H\xc3\xb6gnh\xc3\xb6f\xc3\xb0i', 64.358082999999993, -20.499632999999999, 1002, 500] ,
-	['Ing\xc3\xb3lfsfjall', 63.976433, -21.041499999999999, 551, 500] ,
-	['Jarlhettur', 64.498149999999995, -20.179950000000002, 943, 590] ,
-	['J\xc3\xb6kulborg', 65.576549999999997, -18.398849999999999, 1421, 1331] ,
-	['J\xc3\xb6kulgilstindar', 64.514183000000003, -14.960867, 1313, 1200] ,
-	['J\xc3\xb6rundarfell', 65.465582999999995, -20.260366999999999, 1088, 1070] ,
-	['Kaldbakshorn', 65.856849999999994, -21.301500000000001, 525, 510] ,
-	['Kaldbakur', 65.821332999999996, -23.6571, 998, 950] ,
-	['K\xc3\xa1lfstindar', 64.247682999999995, -20.865400000000001, 824, 620] ,
-	['Keilir', 63.941249999999997, -22.1724, 378, 280] ,
-	['Kerh\xc3\xb3lakambur', 64.236249999999998, -21.738299999999999, 851, 800] ,
-	['Kerling', 65.557500000000005, -18.257066999999999, 1536, 1450] ,
-	['Kerlingar', 64.395183000000003, -17.999917, 1270, 570] ,
-	['Kirkjufell', 64.940849999999998, -23.307449999999999, 463, 450] ,
-	['Kjalfell', 64.775049999999993, -19.545100000000001, 1008, 400] ,
-	['Klakkur', 65.542182999999994, -21.508317000000002, 999, 530] ,
-	['Klifatindur', 64.274383, -15.004016999999999, 889, 690] ,
-	['Klofningsfjall', 65.214799999999997, -22.377949999999998, 645, 630] ,
-	['Koll\xc3\xb3ttadyngja', 65.220983000000004, -16.548666999999998, 1180, 400] ,
-	['Krafla', 65.714100000000002, -16.730066999999998, 813, 210] ,
-	['Kr\xc3\xa1kur', 64.959299999999999, -19.873550000000002, 1188, 590] ,
-	['Krist\xc3\xadnartindar', 64.063417000000001, -16.926117000000001, 1126, 1030] ,
-	['Kverkfj\xc3\xb6ll', 64.641683, -16.719716999999999, 1600, 800] ,
-	['Kv\xc3\xadgindisfell', 64.407916999999998, -21.062783, 783, 630] ,
-	['Lambafell', 64.018299999999996, -21.468883000000002, 546, 160] ,
-	['Lambatindur', 64.938783000000001, -14.248483, 854, 814] ,
-	['L\xc3\xa1trabjarg', 65.488933000000003, -24.473199999999999, 441, 411] ,
-	['Litla-Bj\xc3\xb6rnsfell', 64.499399999999994, -20.779017, 914, 390] ,
-	['Lj\xc3\xb3sufj\xc3\xb6ll', 64.919449999999998, -22.613050000000001, 1063, 990] ,
-	['Lo\xc3\xb0mundur', 64.650300000000001, -19.209067000000001, 1429, 630] ,
-	['L\xc3\xb3magn\xc3\xbapur', 63.992767000000001, -17.524816999999999, 764, 685] ,
-	['Lyngbrekkutindur', 64.220083000000002, -16.429483000000001, 1300, 500] ,
-	['L\xc3\xb6\xc3\xb0mundur', 64.064733000000004, -19.190916999999999, 1079, 480] ,
-	['Mi\xc3\xb0fell \xc3\xad Hreppum', 64.113200000000006, -20.331567, 251, 150] ,
-	['Mi\xc3\xb0fellstindur', 64.121250000000003, -16.958583000000001, 1430, 1230] ,
-	['Miklafell \xc3\xad Hofsj\xc3\xb6kli', 64.883432999999997, -18.54055, 1468, 690] ,
-	['M\xc3\xb3skar\xc3\xb0ahn\xc3\xbakar', 64.242733000000001, -21.547599999999999, 807, 675] ,
-	['M\xc3\xa6lifellshnj\xc3\xbakur', 65.388817000000003, -19.351766999999999, 1147, 830] ,
-	['Ok', 64.598950000000002, -20.880050000000001, 1170, 440] ,
-	['Rau\xc3\xb0kollur', 64.818950000000001, -19.727, 1075, 315] ,
-	['Rau\xc3\xb0ufossafj\xc3\xb6ll', 63.97645, -19.408432999999999, 1206, 356] ,
-	['Reykjaneshyrna', 66.024050000000003, -21.400182999999998, 316, 250] ,
-	['Rj\xc3\xbapnafell', 63.697316999999998, -19.4086, 824, 630] ,
-	['R\xc3\xb3tarfjallshn\xc3\xbakur', 63.978467000000002, -16.664100000000001, 1848, 1750] ,
-	['Sau\xc3\xb0hamarstindur', 64.536766999999998, -15.235132999999999, 1319, 1090] ,
-	['Seldalsfjall', 65.439949999999996, -18.681417, 1071, 520] ,
-	['Seljafell', 64.900532999999996, -22.816099999999999, 571, 430] ,
-	['Skar\xc3\xb0shei\xc3\xb0i', 64.467449999999999, -21.775233, 1053, 960] ,
-	['Sk\xc3\xa1lafell', 63.991917000000001, -21.324417, 574, 280] ,
-	['Skessuhorn', 64.492817000000002, -21.699967000000001, 963, 900] ,
-	['Skjaldbrei\xc3\xb0ur', 64.409300000000002, -20.751132999999999, 1066, 550] ,
-	['Skri\xc3\xb0a', 64.355132999999995, -20.682583000000001, 901, 300] ,
-	['Skri\xc3\xb0ufell', 64.611883000000006, -19.914417, 1235, 635] ,
-	['Sk\xc3\xbamh\xc3\xb6ttur', 65.042450000000002, -14.480833000000001, 1229, 1100] ,
-	['Sn\xc3\xa6fell nor\xc3\xb0an Vatnaj\xc3\xb6kuls', 64.797650000000004, -15.559082999999999, 1833, 1030] ,
-	['Sn\xc3\xa6fell sunnan Vatnaj\xc3\xb6kuls', 64.232266999999993, -16.18675, 1324, 1174] ,
-	['Sn\xc3\xa6fellsj\xc3\xb6kull', 64.809600000000003, -23.774882999999999, 1446, 1100] ,
-	['Sn\xc3\xa6kollur', 64.643716999999995, -19.228183000000001, 1488, 690] ,
-	['Sp\xc3\xa1konufell', 65.843199999999996, -20.246766999999998, 639, 610] ,
-	['Stapatindur', 63.948467000000001, -21.983982999999998, 397, 237] ,
-	['St\xc3\xb3ra-Bj\xc3\xb6rnsfell', 64.495350000000002, -20.697199999999999, 989, 380] ,
-	['St\xc3\xb3ra-K\xc3\xb3ngsfell', 64.000766999999996, -21.66075, 602, 192] ,
-	['St\xc3\xb3ra-Reykjafell', 64.027732999999998, -21.390332999999998, 540, 300] ,
-	['St\xc3\xb3ri-Meitill', 64.000416999999999, -21.432333, 514, 250] ,
-	['Str\xc3\xbatur', 64.749049999999997, -20.6813, 937, 600] ,
-	['St\xc3\xb6ng', 64.779832999999996, -14.352833, 965, 955] ,
-	['Sunnutindur', 64.666600000000003, -14.883616999999999, 1158, 1040] ,
-	['S\xc3\xbalur', 65.603499999999997, -18.197949999999999, 1213, 1163] ,
-	['Sveinstindur', 64.105817000000002, -18.417649999999998, 1089, 390] ,
-	['Sy\xc3\xb0ri-H\xc3\xa1steinar', 64.800882999999999, -18.748249999999999, 1628, 830] ,
-	['Sy\xc3\xb0sta-S\xc3\xbala', 64.336667000000006, -21.16085, 1093, 970] ,
-	['S\xc3\xbdrfell', 63.838000000000001, -22.658000000000001, 95, 75] ,
-	['Tindast\xc3\xb3ll', 65.854433, -19.785416999999999, 995, 950] ,
-	['Tr\xc3\xb6lladyngja \xc3\xa1 Reykjanesskaga', 63.940733000000002, -22.096667, 375, 265] ,
-	['Tr\xc3\xb6lladyngja nor\xc3\xb0an Vatnaj\xc3\xb6kuls', 64.895083, -17.251449999999998, 1459, 680] ,
-	['Tr\xc3\xb6llakirkja \xc3\xad H\xc3\xadtardal', 64.873182999999997, -21.825033000000001, 939, 770] ,
-	['Tr\xc3\xb6llakirkja vestan Holtav\xc3\xb6r\xc3\xb0uhei\xc3\xb0ar', 65.004767000000001, -21.187999999999999, 1001, 700] ,
-	['Tungnafellsj\xc3\xb6kull', 64.737049999999996, -17.985050000000001, 1539, 620] ,
-	['Va\xc3\xb0alfj\xc3\xb6ll', 65.581299999999999, -22.07375, 609, 540] ,
-	['Valahn\xc3\xbakar', 64.087800000000001, -19.481249999999999, 721, 260] ,
-	['Vindbelgjarfjall', 65.624233000000004, -17.068332999999999, 524, 240] ,
-	['V\xc3\xadfilsfell', 64.038683000000006, -21.556450000000002, 655, 305] ,
-	['V\xc3\xb6r\xc3\xb0utindur', 64.346017000000003, -15.710417, 1057, 967] ,
-	['\xc3\x9dmir', 63.78595, -19.567599999999999, 1464, 590] ,
-	['\xc3\x9e\xc3\xb3risj\xc3\xb6kull', 64.542083000000005, -20.707049999999999, 1329, 630] ,
-	['\xc3\x9e\xc3\xb3ristindur', 64.175449999999998, -18.919232999999998, 826, 300] ,
-	['\xc3\x9er\xc3\xadhyrningur', 63.788916999999998, -19.9633, 675, 410] ,
-	['\xc3\x9ever\xc3\xa1rtindsegg', 64.199250000000006, -16.142216999999999, 1554, 1500] ,
-	['\xc3\x9everfell vi\xc3\xb0 Rey\xc3\xb0arvatn', 64.472217000000001, -21.093382999999999, 655, 350] ,
-	['\xc3\x9eyrill', 64.393117000000004, -21.406199999999998, 393, 350]
-];
-</script>
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<script type="text/javascript" src="js/main.js"></script>
 </head>
 <body onload="initialize()">
 	<div id="header">
@@ -218,10 +22,9 @@ var mountains = [
 			<h1>Íslensk fjöll: Gönguleiðir á 151 tind</h1>
 			<h2>Just testing this stuff!</h2>
 		</div>
-		<div id="settings">
-			<input id="min_height" name="min_height" type="text" value="0" />
-			<input id="max_height" name="max_height" type="text" value="2109" />
-			<input id="update_settings" name="update_settings" type="submit" /> 
+		<div id="settings"> 
+			<div id="slider-range"></div>
+			<p>Altitude range: <span id="alt-range"></span></p>
 		</div>
 		<div style="clear: both;"></div>
 	</div>
