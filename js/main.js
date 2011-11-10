@@ -1,10 +1,12 @@
 
 function initialize() {
 
-	// Initial configuration
+	// Global stuff
 	min_height = 0;
 	max_height = 2109;
+	markers = [];
 
+	// Initial configuration
   var options = {
     zoom: 7,
     center: new google.maps.LatLng(64.8, -18),
@@ -13,47 +15,41 @@ function initialize() {
   var map = new google.maps.Map(document.getElementById("map_canvas"), options);
 
   // Creates markers
-	markers = [];
   for (var i = 0; i < mountains.length; i++) {
     var mountain = mountains[i];
     var location = new google.maps.LatLng(mountain[1], mountain[2]);
     var marker = new google.maps.Marker({
+        map:			map,
+        title:		mountain[0],
         position: location,
-        map: map,
-        title: mountain[0]
     });
-		if (mountain[3] < min_height || mountain[4] > max_height) {
-			marker.setVisible(false);
-		}
 		markers[i] = marker;
   }
 
-	// Settings stuff
-	$(document).ready(function() {
-
-		// Initializes the slider.
-		$("#slider-range").slider({
-				range: true,
-				min: 0,
-				max: 2109,
-				values: [0, 2109],
-				slide: function(event, ui) {
-					min_height = parseInt(ui.values[0]);
-					max_height = parseInt(ui.values[1]);
-					$("#alt-range").text(min_height + " - " + max_height + " metrar.");
-					for (var i = 0; i < mountains.length; i++) {
-						// TODO: Code duplication.
-						var mountain = mountains[i];
-						if (mountain[3] < min_height || mountain[3] > max_height) {
-							markers[i].setVisible(false);
-						} else {
-							markers[i].setVisible(true);
-						}
-					}
-				}
-			});
-
+	// Initializes the slider.
+	$("#slider-range").slider({
+		range: true,
+		min: min_height,
+		max: max_height,
+		values: [min_height, max_height],
+		slide: function(event, ui) {
+			min_height = parseInt(ui.values[0]);
+			max_height = parseInt(ui.values[1]);
+			update();
+		}
 	});
+
+	update();
+}
+
+function update() {
+	$("#alt-range").text(min_height + " - " + max_height + " metrar.");
+	for (var i = 0; i < mountains.length; i++) {
+		// TODO: Code duplication.
+		var mountain = mountains[i];
+		var is_visible = mountain[3] >= min_height && mountain[3] <= max_height; 
+		markers[i].setVisible(is_visible);
+	}
 }
 
 /* The actual data. */
